@@ -1,0 +1,11 @@
+1:炉中洩検(1階)
+	addr	10B1DF73255E
+
+2:建機工程
+	stInfoSet
+	addr	1804ed6bd155
+	name	QL-820NWB9551
+
+3:QL-820NWBc
+	addr	10B1DF73255E
+
