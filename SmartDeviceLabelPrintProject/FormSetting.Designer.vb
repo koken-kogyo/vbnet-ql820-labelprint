@@ -48,14 +48,15 @@ Partial Public Class FormSetting
         Me.lblTitle.Location = New System.Drawing.Point(12, 38)
         Me.lblTitle.Name = "lblTitle"
         Me.lblTitle.Size = New System.Drawing.Size(215, 29)
-        Me.lblTitle.Text = "QL-820NWB"
+        Me.lblTitle.Text = "QL-820NWBc"
         '
         'cmbPrinters
         '
         Me.cmbPrinters.Font = New System.Drawing.Font("TTヒラギノUD丸ゴ Mono StdN W4", 18.0!, System.Drawing.FontStyle.Regular)
-        Me.cmbPrinters.Items.Add("1:炉中洩検(1階)")
-        Me.cmbPrinters.Items.Add("2:建機工程")
-        Me.cmbPrinters.Items.Add("3:QL-820NWBc")
+        Me.cmbPrinters.Items.Add("1:酸洗梱包")
+        Me.cmbPrinters.Items.Add("2:炉中洩検(1階)")
+        Me.cmbPrinters.Items.Add("3:建機工程")
+        Me.cmbPrinters.Items.Add("4:QL-820NWBc(製造事務所)")
         Me.cmbPrinters.Items.Add("9:その他")
         Me.cmbPrinters.Location = New System.Drawing.Point(11, 112)
         Me.cmbPrinters.Name = "cmbPrinters"
@@ -64,6 +65,7 @@ Partial Public Class FormSetting
         '
         'txtBDAddress
         '
+        Me.txtBDAddress.BackColor = System.Drawing.SystemColors.ControlLight
         Me.txtBDAddress.Font = New System.Drawing.Font("TTヒラギノUD丸ゴ Mono StdN W4", 22.0!, System.Drawing.FontStyle.Regular)
         Me.txtBDAddress.Location = New System.Drawing.Point(11, 202)
         Me.txtBDAddress.Name = "txtBDAddress"
@@ -147,7 +149,6 @@ Partial Public Class FormSetting
         Me.Controls.Add(Me.lblSelectPrinter)
         Me.Controls.Add(Me.lblTitle)
         Me.Controls.Add(Me.LabelMenu)
-        Me.Font = New System.Drawing.Font("メイリオ", 14.0!, System.Drawing.FontStyle.Regular)
         Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None
         Me.MaximizeBox = False
         Me.MinimizeBox = False

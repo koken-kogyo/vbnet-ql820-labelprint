@@ -1,0 +1,44 @@
+Bluetooth情報
+
+1:酸洗梱包
+	stInfoSet.addr = "EC9161D2E724"
+	stInfoSet.name = "QL-820NWB9433"
+
+2:炉中洩検1F
+	stInfoSet.addr = "10B1DF73255E"
+	stInfoSet.name = "QL-820NWB5054"
+
+3:建機工程
+	stInfoSet.addr = "1804ed6bd155"
+	stInfoSet.name = "QL-820NWB9551"
+
+4:技術課
+	stInfoSet.addr = "10B1DF73255E"
+	stInfoSet.name = "QL-820NWB5054"
+
+btBluetoothOpen
+	LibDef.BT_OK 正常終了
+	LibDef.BT_ERR 異常終了
+	LibDef.BT_ERR_COMM_ALREADY_OPEN Bluetooth アダプタがオープン済み
+	LibDef.BT_ERR_COMM_DEV_PROCESSING Bluetooth デバイス操作中
+	LibDef.BT_ERR_COMM_INFO_PROCESSING Bluetooth アダプタ設定中
+
+btBluetoothSPPConnect
+	LibDef.BT_OK 正常終了
+	LibDef.BT_ERR 異常終了
+	LibDef.BT_ERR_COMM_NOTOPEN Bluetooth アダプタがオープンされていない
+	LibDef.BT_ERR_COMM_NOSERVICE 相手機器側でSPP サービスが使用できない
+	LibDef.BT_ERR_COMM_DEV_PROCESSING Bluetooth デバイス操作中
+	LibDef.BT_ERR_COMM_PROF_PROCESSING Bluetooth 各種プロファイル動作中
+	LibDef.BT_ERR_COMM_SPP_CONNECTED SPP 接続が確立済み
+	LibDef.BT_ERR_COMM_HID_CONNECTED HID 接続が確立済み
+
+btBluetoothSPPSend
+
+	LibDef.BT_OK 正常終了
+	LibDef.BT_ERR 異常終了
+	LibDef.BT_ERR_COMM_NOTOPEN Bluetooth アダプタがオープンされていない
+	LibDef.BT_ERR_COMM_DEV_PROCESSING Bluetooth デバイス操作中
+	LibDef.BT_ERR_COMM_PROF_PROCESSING Bluetooth 各種プロファイル動作中
+	LibDef.BT_ERR_COMM_SPP_NOTCONNECT SPP 接続が確立していない
+	LibDef.BT_ERR_COMM_HID_CONNECTED HID 接続が確立済み

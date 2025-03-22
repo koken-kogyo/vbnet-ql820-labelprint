@@ -15,8 +15,9 @@ Module ModuleCommon
 
     Public myPrinter As Integer
     Public myBDAddress As String
-    Public aryPrinterName() As String = Split("1:炉中洩検(1階),2:建機工程,3:QL-820NWBc,9:その他", ",")
-    Public aryBRAddress() As String = Split("10B1DF73255E,1804ed6bd155,10B1DF73255E,", ",")
+    Public aryPrinterName() As String = Split("1:酸洗梱包,2:炉中洩検(1階),3:建機工程,4:QL-820NWBc,9:その他", ",")
+    Public aryDeviceName() As String = Split("QL-820NWB9433,QL-820NWB5054,QL-820NWB9551,QL-820NWB5054,", ",")
+    Public aryBRAddress() As String = Split("EC9161D2E724,10B1DF73255E,1804ed6bd155,10B1DF73255E,", ",")
 
     '*******************************************************************************
     '         * 機能 ：iniファイルで1行単位のReadを行います。
@@ -152,33 +153,32 @@ Module ModuleCommon
 
         Try
             timeoutSet = 30000
-            If myPrinter = 1 Then
 
-                stInfoSet.addr = "10B1DF73255E"
-                stInfoSet.name = "QL-820NWB5054"
-
-            ElseIf myPrinter = 2 Then
-
-                stInfoSet.addr = "1804ed6bd155"
-                stInfoSet.name = "QL-820NWB9551"
-
-            ElseIf myPrinter = 3 Then
-
-                stInfoSet.addr = "10B1DF73255E"
-                stInfoSet.name = "QL-820NWB5054"
-
-            ElseIf myPrinter = 9 Then
-
-                stInfoSet.addr = myBDAddress
-                stInfoSet.name = "OTHER"
-
-            Else
-                Return 777
-            End If
+            stInfoSet.addr = aryBRAddress(myPrinter - 1)
+            stInfoSet.name = aryDeviceName(myPrinter - 1)
 
             ret = Bluetooth.btBluetoothSPPConnect(stInfoSet, timeoutSet)
+            Select Case ret
+                Case LibDef.BT_ERR_COMM_NOTOPEN
+                    disp = "Bluetooth アダプタがオープンされていない"
+                Case LibDef.BT_ERR_COMM_NOSERVICE
+                    disp = "相手機器側でSPP サービスが使用できない"
+                    disp = "プリンターに接続できません．" & vbCrLf & vbCrLf & _
+                        "1.電源が入っている事" & vbCrLf & _
+                        "2.プリンターの設定場所" & vbCrLf & vbCrLf & _
+                        "を確認してください．"
+                Case LibDef.BT_ERR_COMM_DEV_PROCESSING
+                    disp = "Bluetooth デバイス操作中"
+                Case LibDef.BT_ERR_COMM_PROF_PROCESSING
+                    disp = "Bluetooth 各種プロファイル動作中"
+                Case LibDef.BT_ERR_COMM_SPP_CONNECTED
+                    disp = "SPP 接続が確立済み"
+                Case LibDef.BT_ERR_COMM_HID_CONNECTED
+                    disp = "HID 接続が確立済み"
+                Case LibDef.BT_ERR
+                    disp = "異常終了"
+            End Select
             If ret <> LibDef.BT_OK Then
-                disp = "btBluetoothSPPConnect error ret[" & ret & "]"
                 MsgBox(disp, MsgBoxStyle.Critical)
                 Return ret
             End If
@@ -208,6 +208,11 @@ Module ModuleCommon
         Dim rsizeGet As UInt32 = 0
 
         Try
+            ' QL-820NWB
+            ' ^TS001:テンプレート番号
+            ' ^SS01x:終端文字設定
+            ' ^CNxxx:印刷枚数
+            ' ^FF   :印刷
             Dim qtyparm As String = Strings.Right("000" + iQTY.Trim(), 3)
             Dim tempparm As String = Strings.Right("000" + iTEMP.Trim(), 3)
             strSendBuf = "^TS" & tempparm & "^SS01,^CN" & qtyparm & iHMCD & ",^FF"
@@ -215,12 +220,26 @@ Module ModuleCommon
             dsizeSet = CType(bBufSet.Length, UInt32)
             pBufSet = Marshal.AllocCoTaskMem(CType(dsizeSet, Int32))
             Marshal.Copy(bBufSet, 0, pBufSet, CType(dsizeSet, Int32))
-            'ret = Bluetooth.btBluetoothSPPSend(pBufSet, dsizeSet, ssizeGet)
+            ret = Bluetooth.btBluetoothSPPSend(pBufSet, dsizeSet, ssizeGet)
             ' デバッグ用
             Debug.WriteLine(strSendBuf) ' イミディエイトウィンドウに表示される
             Marshal.FreeCoTaskMem(pBufSet)
+            Select Case ret
+                Case LibDef.BT_ERR_COMM_NOTOPEN
+                    disp = "Bluetooth アダプタがオープンされていない"
+                Case LibDef.BT_ERR_COMM_DEV_PROCESSING
+                    disp = "Bluetooth デバイス操作中"
+                Case LibDef.BT_ERR_COMM_PROF_PROCESSING
+                    disp = "Bluetooth 各種プロファイル動作中"
+                Case LibDef.BT_ERR_COMM_SPP_NOTCONNECT
+                    disp = "SPP 接続が確立していない"
+                Case LibDef.BT_ERR_COMM_HID_CONNECTED
+                    disp = "HID 接続が確立済み"
+                Case LibDef.BT_ERR
+                    disp = "異常終了"
+            End Select
+
             If ret <> LibDef.BT_OK Then
-                disp = "btBluetoothSPPSend error ret[" & ret & "]"
                 MsgBox(disp, MsgBoxStyle.Critical)
                 Return ret
             End If

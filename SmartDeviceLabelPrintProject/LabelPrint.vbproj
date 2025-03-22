@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{37DFFAEB-50D7-476F-8A99-9C62BEA8A428}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <StartupObject>LabelPrint.FormMain</StartupObject>
+    <StartupObject>LabelPrint.FormLabelPrint</StartupObject>
     <RootNamespace>LabelPrint</RootNamespace>
     <AssemblyName>LabelPrint</AssemblyName>
     <ProjectTypeGuids>{68B1623D-7FB9-47D8-8664-7ECEA3297D4F};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
@@ -105,13 +105,6 @@
     </Compile>
     <Compile Include="ModuleCommon.vb" />
     <Compile Include="ModuleScan.vb" />
-    <Compile Include="FormMain.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="FormMain.Designer.vb">
-      <DependentUpon>FormMain.vb</DependentUpon>
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="FormLabelPrint.Designer.vb">
       <DependentUpon>FormLabelPrint.vb</DependentUpon>
     </Compile>
@@ -132,9 +125,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="FormMain.resx">
-      <DependentUpon>FormMain.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FormLabelPrint.resx">
       <DependentUpon>FormLabelPrint.vb</DependentUpon>
     </EmbeddedResource>
