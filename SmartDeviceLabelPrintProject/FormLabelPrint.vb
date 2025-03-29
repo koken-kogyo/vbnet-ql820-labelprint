@@ -140,6 +140,7 @@ Public Class FormLabelPrint
             txtHMCD.Focus()
             Return
         End If
+        txtHMCD.Text = Trim(txtHMCD.Text)
         txtHMCD.BackColor = Color.White
     End Sub
 
@@ -230,10 +231,23 @@ Public Class FormLabelPrint
             MessageBox.Show("印刷枚数を入力してください")
             txtQTY.Focus()
             Return
+        ElseIf IsNumeric(qty) = False Then
+            MessageBox.Show("数値を入力してください")
+            txtQTY.Focus()
+            Return
         ElseIf temp = "" Then
             MessageBox.Show("テンプレート番号を入力してください")
             txtTemplate.Focus()
             Return
+        ElseIf Convert.ToInt32(qty) > 10 Then
+            If (MessageBox.Show("10枚以上が指定されました" & vbCrLf & "本当に印刷しますか？", "質問", _
+                MessageBoxButtons.YesNo, _
+                MessageBoxIcon.Exclamation, _
+                MessageBoxDefaultButton.Button2) _
+                = Windows.Forms.DialogResult.No) Then
+                txtQTY.Focus()
+                Return
+            End If
         End If
 
         ' 進捗ダイアログ表示
